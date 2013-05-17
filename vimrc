@@ -4,12 +4,13 @@ set grepprg=internal
 set shiftwidth=4 softtabstop=4 expandtab
 set incsearch ignorecase hlsearch
 " Press space to clear search highlighting and any message already displayed.
-nnoremap <silent> <Space> :silent noh<Bar>echo<CR>
+nnoremap <silent> <Space> :silent noh<Bar>echo<CR>:GhcModTypeClear<CR>
 syntax on
 "lang en
 "language mes en
 "set langmenu=en_US.UTF-8
 :filetype plugin on
+:filetype indent on
 set gfn=DejaVu_Sans_Mono:h11:b:cANSI
 "set statusline=%F%m%r%h%w\ [POS=%04l,%04v][%p%%]\ [LEN=%L]
 " It's useful to show the buffer number in the status line.
@@ -67,10 +68,13 @@ set backspace=indent,eol,start
 let g:proj_flags='gcimst'
 
 " haskell plugin configuration
-au BufEnter *.hs compiler ghc 
-let g:haddock_docdir="c:/Program Files/Haskell Platform/2012.2.0.0/doc/html/"
-let g:ghc="c:\Program Files\Haskell Platform\2012.2.0.0\bin\ghc"
-let g:haddock_browser="C:/Documents and Settings/chagniot/Local Settings/Application Data/Google/Chrome/Application/chrome.exe"
+autocmd BufWritePost *.hs,*.lhs GhcModCheckAndLintAsync
+:nnoremap _t :GhcModType<CR>
+:nnoremap _T :GhcModTypeInsert<CR>
+"au BufEnter *.hs,*.lhs compiler ghc 
+"let g:haddock_docdir="c:/Program Files/Haskell Platform/2012.2.0.0/doc/html/"
+"let g:ghc="c:\Program Files\Haskell Platform\2012.2.0.0\bin\ghc"
+"let g:haddock_browser="C:/Documents and Settings/chagniot/Local Settings/Application Data/Google/Chrome/Application/chrome.exe"
 
 " no blinking cursor
 set guicursor+=a:blinkon0
